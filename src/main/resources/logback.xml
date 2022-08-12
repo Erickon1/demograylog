@@ -12,7 +12,7 @@
             </Pattern>
         </layout>
     </appender>
- 
+    <!--
     <appender name="RollingFile"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOGS}/current.log</file>
@@ -23,7 +23,6 @@
  
         <rollingPolicy
             class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily and when the file reaches 10 MegaBytes -->
             <fileNamePattern>${LOGS}/%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
@@ -32,13 +31,23 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
-     
+     -->
+    <appender name="GELF"
+        class="de.siegmar.logbackgelf.GelfTcpAppender">
+        <graylogHost>${GRAYLOG_HOST}</graylogHost>
+        <graylogPort>${GRAYLOG_PORT}</graylogPort>
+    </appender>
+
     <!-- LOG everything at INFO level -->
     <root level="info">
+        <!-- QUITA LOG File 
         <appender-ref ref="RollingFile" />
+        -->
         <!-- QUITA LOG DE CONSOLA 
         -->
         <appender-ref ref="Console" />
+        <appender-ref ref="GELF" />
+
         
     </root>
  
